@@ -124,7 +124,7 @@ def run_game():
 
         if turn == AI and not game_over:
 
-            col, minimax_score = minimax(board, 5, -9999999, 9999999, True)
+            col, minimax_score = minimax(board, 7, -9999999, 9999999, True)
 
             if is_valid_location(board, col):
 
