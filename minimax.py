@@ -7,6 +7,7 @@ from evaluation import score_position
 
 
 def is_terminal_node(board):
+
     return (
         winning_move(board, PLAYER)
         or winning_move(board, AI)
@@ -17,6 +18,10 @@ def is_terminal_node(board):
 def minimax(board, depth, alpha, beta, maximizing_player):
 
     valid_locations = get_valid_locations(board)
+
+    # Prefer center columns first
+    valid_locations.sort(key=lambda col: abs(3 - col))
+
     terminal = is_terminal_node(board)
 
     if depth == 0 or terminal:
@@ -43,6 +48,7 @@ def minimax(board, depth, alpha, beta, maximizing_player):
         for col in valid_locations:
 
             row = get_next_open_row(board, col)
+
             temp_board = board.copy()
 
             drop_piece(temp_board, row, col, AI)
@@ -56,11 +62,13 @@ def minimax(board, depth, alpha, beta, maximizing_player):
             )[1]
 
             if new_score > value:
+
                 value = new_score
                 best_col = col
 
             alpha = max(alpha, value)
 
+            # Alpha-Beta Pruning
             if alpha >= beta:
                 break
 
@@ -74,6 +82,7 @@ def minimax(board, depth, alpha, beta, maximizing_player):
         for col in valid_locations:
 
             row = get_next_open_row(board, col)
+
             temp_board = board.copy()
 
             drop_piece(temp_board, row, col, PLAYER)
@@ -87,11 +96,13 @@ def minimax(board, depth, alpha, beta, maximizing_player):
             )[1]
 
             if new_score < value:
+
                 value = new_score
                 best_col = col
 
             beta = min(beta, value)
 
+            # Alpha-Beta Pruning
             if alpha >= beta:
                 break
 
