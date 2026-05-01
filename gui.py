@@ -128,7 +128,7 @@ def run_game():
 
             if is_valid_location(board, col):
 
-                pygame.time.wait(500)
+                pygame.time.wait(250)
 
                 row = get_next_open_row(board, col)
                 drop_piece(board, row, col, AI)
