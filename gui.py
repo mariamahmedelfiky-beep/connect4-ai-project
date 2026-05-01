@@ -91,11 +91,18 @@ def run_game():
                 sys.exit()
 
             if event.type == pygame.MOUSEMOTION:
+
                 pygame.draw.rect(screen, BLACK, (0, 0, width, SQUARESIZE))
+
                 posx = event.pos[0]
 
                 if turn == PLAYER:
-                    pygame.draw.circle(screen, RED, (posx, int(SQUARESIZE / 2)), RADIUS)
+                    pygame.draw.circle(
+                        screen,
+                        RED,
+                        (posx, int(SQUARESIZE / 2)),
+                        RADIUS,
+                    )
 
             pygame.display.update()
 
@@ -114,8 +121,15 @@ def run_game():
                         drop_piece(board, row, col, PLAYER)
 
                         if winning_move(board, PLAYER):
-                            label = font.render("PLAYER WINS", 1, RED)
+
+                            label = font.render(
+                                "HUMAN PLAYER WINS!",
+                                1,
+                                RED,
+                            )
+
                             screen.blit(label, (40, 10))
+
                             game_over = True
 
                         draw_board(board)
@@ -124,7 +138,13 @@ def run_game():
 
         if turn == AI and not game_over:
 
-            col, minimax_score = minimax(board, 7, -9999999, 9999999, True)
+            col, minimax_score = minimax(
+                board,
+                7,
+                -9999999,
+                9999999,
+                True,
+            )
 
             if is_valid_location(board, col):
 
@@ -134,8 +154,15 @@ def run_game():
                 drop_piece(board, row, col, AI)
 
                 if winning_move(board, AI):
-                    label = font.render("AI WINS", 1, YELLOW)
+
+                    label = font.render(
+                        "AI PLAYER WINS!",
+                        1,
+                        YELLOW,
+                    )
+
                     screen.blit(label, (40, 10))
+
                     game_over = True
 
                 draw_board(board)
@@ -143,8 +170,15 @@ def run_game():
                 turn = PLAYER
 
         if is_draw(board) and not game_over:
-            label = font.render("DRAW", 1, YELLOW)
+
+            label = font.render(
+                "DRAW GAME",
+                1,
+                YELLOW,
+            )
+
             screen.blit(label, (40, 10))
+
             game_over = True
 
         if game_over:
